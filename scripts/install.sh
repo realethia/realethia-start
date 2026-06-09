@@ -56,7 +56,7 @@ cd "${START_DIR}"
 log "Running setup (clone sibling repos, prepare deps and env)..."
 make setup
 
-log "Opening Cursor..."
-bash "${START_DIR}/scripts/open-workspace.sh"
+log "Opening Workspace in Editor..."
+REALETHIA_EDITOR=cursor bash "${START_DIR}/scripts/open-workspace.sh"
 
 log "Done."

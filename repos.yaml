@@ -9,7 +9,7 @@ default_branch: main
 
 repos:
   - name: ethia
-    description: Real-time news flow engine (Go services, Docker Compose local stack)
+    description: Reality consumption system
     url: https://github.com/realethia/ethia.git
     local_dev: true
     bootstrap:
@@ -23,7 +23,7 @@ repos:
       rss_test: 8081
 
   - name: realethia-dashboard
-    description: Next.js web dashboard and OpenAPI mock tooling
+    description: Realethia Dashboard
     url: https://github.com/realethia/realethia-dashboard.git
     local_dev: true
     bootstrap:
@@ -34,7 +34,7 @@ repos:
       mock_api: 3001
 
   - name: realethia-app
-    description: Expo React Native mobile app
+    description: Realethia App
     url: https://github.com/realethia/realethia-app.git
     local_dev: true
     bootstrap:
@@ -43,7 +43,7 @@ repos:
       expo: 8081
 
   - name: realethia-infra
-    description: Kubernetes deployment (Hetzner k3s), staging/prod envs
+    description: Realethia Infrastructure
     url: https://github.com/realethia/realethia-infra.git
     local_dev: false
     bootstrap:
@@ -52,7 +52,7 @@ repos:
     note: Cloud deployment only; not required for typical local dashboard + ethia dev.
 
   - name: realethia-research-docs
-    description: Draft research and explorations (not production specs)
+    description: Realethia Research Docs and Samples
     url: https://github.com/realethia/realethia-research-docs.git
     local_dev: false
     bootstrap: []

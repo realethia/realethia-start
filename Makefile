@@ -23,7 +23,7 @@ help:
 	@echo "  make clone            Clone/update all repos from repos.yaml"
 	@echo "  make bootstrap        Prepare all repos (npm, .env files)"
 	@echo "  make workspace        Regenerate realethia.code-workspace"
-	@echo "  make workspace-open   Open multi-root workspace in Cursor/VS Code"
+	@echo "  make workspace-open   Open workspace + README (Cursor, else VS Code)"
 	@echo ""
 	@echo "  make dev-ethia        Start Ethia stack only (alias for: make start)"
 	@echo "  make dev-dashboard    Mock API + Next.js dashboard"
@@ -56,7 +56,7 @@ workspace:
 	@bash "$(SCRIPT_DIR)/generate-workspace.sh"
 
 workspace-open: workspace
-	@bash "$(SCRIPT_DIR)/open-workspace.sh"
+	@REALETHIA_EDITOR=cursor bash "$(SCRIPT_DIR)/open-workspace.sh"
 
 dev-ethia: start
 

@@ -19,15 +19,7 @@ make workspace-open
 
 ## Repositories
 
-| Repo | Description |
-|------|-------------|
-| [ethia](https://github.com/realethia/ethia) | Reality consumption system |
-| [realethia-dashboard](https://github.com/realethia/realethia-dashboard) | Realethia Dashboard |
-| [realethia-app](https://github.com/realethia/realethia-app) | Realethia App |
-| [realethia-infra](https://github.com/realethia/realethia-infra) | Realethia Infrastructure |
-| [realethia-research-docs](https://github.com/realethia/realethia-research-docs) | Realethia Research Docs and Samples |
-
-Canonical list: [`repos.yaml`](repos.yaml).
+See [`repos.yaml`](repos.yaml) for the full list of Realethia system repositories (names, URLs, and descriptions).
 
 ## Common commands
 
@@ -80,7 +72,7 @@ Org-wide agent rules live in **`realethia-start` only** (not copied into sibling
 
 ## Adding a repository
 
-1. Add an entry to `repos.yaml`
+1. Add an entry to [`repos.yaml`](repos.yaml)
 2. Run `make workspace` to refresh the VS Code workspace file
 3. Update `AGENTS.md` and `docs/architecture-overview.md` in **realethia-start**
 4. Add repo-specific Cursor rules in `realethia-start/.cursor/rules/` only if needed — do not copy org-wide rules into the new repo
