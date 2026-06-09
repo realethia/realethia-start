@@ -2,10 +2,22 @@
 
 ## First-time setup
 
+**One command** from your workspace folder:
+
+```bash
+mkdir -p ~/work/realethia && cd ~/work/realethia
+curl -fsSL https://raw.githubusercontent.com/realethia/realethia-start/main/scripts/install.sh | bash
+```
+
+Or from an existing clone: `make install` inside `realethia-start`.
+
+Manual setup:
+
 ```bash
 git clone https://github.com/realethia/realethia-start.git
 cd realethia-start
 make setup
+make workspace-open
 ```
 
 This clones all repos, installs npm dependencies, and copies `.env` files from examples. **Nothing is started.**

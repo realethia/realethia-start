@@ -10,12 +10,13 @@ export REALETHIA_WORKSPACE ?= $(abspath $(CURDIR)/..)
 SCRIPT_DIR := $(CURDIR)/scripts
 TARGET ?= ethia
 
-.PHONY: help setup check clone bootstrap start workspace workspace-open \
+.PHONY: help install setup check clone bootstrap start workspace workspace-open \
 	dev-ethia dev-dashboard dev-app dev-all status
 
 help:
 	@echo "Realethia dev bootstrap — workspace: $(REALETHIA_WORKSPACE)"
 	@echo ""
+	@echo "  make install          Clone realethia-start (if needed), setup, open Cursor"
 	@echo "  make setup            Clone repos, prepare deps and env files (no start)"
 	@echo "  make start            Build and start local services (default: Ethia)"
 	@echo "  make check            Verify prerequisites (git, docker, go, node, ...)"
@@ -29,6 +30,9 @@ help:
 	@echo "  make dev-app          Expo mobile app"
 	@echo "  make dev-all          Print commands to run full local stack"
 	@echo "  make status           Show clone state of each repo"
+
+install:
+	@bash "$(SCRIPT_DIR)/install.sh" "$(REALETHIA_WORKSPACE)"
 
 setup: check clone bootstrap workspace
 	@echo ""
@@ -52,9 +56,7 @@ workspace:
 	@bash "$(SCRIPT_DIR)/generate-workspace.sh"
 
 workspace-open: workspace
-	@cursor "$(CURDIR)/realethia.code-workspace" 2>/dev/null \
-		|| code "$(CURDIR)/realethia.code-workspace" 2>/dev/null \
-		|| echo "Open manually: $(CURDIR)/realethia.code-workspace"
+	@bash "$(SCRIPT_DIR)/open-workspace.sh"
 
 dev-ethia: start
 
