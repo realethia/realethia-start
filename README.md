@@ -102,8 +102,10 @@ npx expo start
 
 ## AI development
 
+Org-wide agent rules live in **`realethia-start` only** (not copied into sibling repos). Open `realethia.code-workspace` so they apply across all repos.
+
 - [`AGENTS.md`](AGENTS.md) — system map and conventions for coding agents
-- [`.cursor/rules/`](.cursor/rules/) — Cursor rules (always-on system context)
+- [`.cursor/rules/`](.cursor/rules/) — org-wide Cursor rules (`alwaysApply`)
 - [`docs/local-development.md`](docs/local-development.md) — detailed local dev guide
 - [`docs/architecture-overview.md`](docs/architecture-overview.md) — cross-repo architecture summary
 
@@ -123,7 +125,8 @@ Optional: Azure CLI / azd (dashboard deploy), kubectl + hcloud (realethia-infra)
 
 1. Add an entry to `repos.yaml`
 2. Run `make workspace` to refresh the VS Code workspace file
-3. Update `AGENTS.md` and `docs/architecture-overview.md`
+3. Update `AGENTS.md` and `docs/architecture-overview.md` in **realethia-start**
+4. Add repo-specific Cursor rules in `realethia-start/.cursor/rules/` only if needed — do not copy org-wide rules into the new repo
 
 ## License
 

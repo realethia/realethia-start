@@ -7,6 +7,8 @@ alwaysApply: true
 
 You are working in the Realethia workspace bootstrapped by `realethia-start`.
 
+Org-wide Cursor rules live in **`realethia-start/.cursor/rules/`** only. Do not add or copy shared rules into sibling repos. Open `realethia.code-workspace` so they apply across the workspace.
+
 ## Repositories
 
 - **ethia** — Go flow engine (orchestrator, poller, connect); local dev via Docker Compose in `infra/`

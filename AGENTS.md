@@ -63,9 +63,20 @@ Secrets: `ethia/infra/.env` (from `.env.example`). Required for full functionali
 5. **research-docs** are exploratory — do not treat as implementation specs
 6. Run repo-local checks: `make check` (ethia), `npm run check` (dashboard)
 
+## Agent rules (org-wide)
+
+Shared Cursor rules and agent docs live **only in `realethia-start`** — not copied into sibling repos.
+
+Open `realethia.code-workspace` (includes `realethia-start`) so rules apply across all repos:
+
+- `.cursor/rules/` — org-wide agent rules (`alwaysApply: true`)
+- `AGENTS.md` — system map and conventions
+
+Add repo-specific rules here only when a repo needs extra guidance; do not duplicate org-wide rules into other repos.
+
 ## Git commits
 
-All repos follow Conventional Commits. See `.cursor/rules/git-commits.mdc`.
+All Realethia repos follow Conventional Commits. Canonical rule: `realethia-start/.cursor/rules/git-commits.mdc`.
 
 Format: `type: Description starting with capital letter.`
 

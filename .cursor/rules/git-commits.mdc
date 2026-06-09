@@ -5,6 +5,8 @@ alwaysApply: true
 
 # Git commit messages
 
+Org-wide rule for all Realethia repositories. Lives in `realethia-start` only — applied via the multi-root workspace, not copied per repo.
+
 All Realethia repositories use **Conventional Commits** with this subject format:
 
 ```
