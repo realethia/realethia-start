@@ -8,20 +8,35 @@ cd realethia-start
 make setup
 ```
 
+This clones all repos, installs npm dependencies, and copies `.env` files from examples. **Nothing is started.**
+
 Edit `../ethia/infra/.env` and set at minimum:
 
 - `POSTGRES_PASSWORD`
 - Azure storage variables (if testing blob outputs)
 - `OPENAI_API_KEY` (optional; for AI-generated RSS test articles)
 
+Then start services:
+
+```bash
+make start
+```
+
 ## Ethia
+
+From `realethia-start/`:
+
+| Command | Description |
+|---------|-------------|
+| `make start` | Build binaries, images, start Compose stack |
+| `make dev-ethia` | Same as `make start` |
 
 From `ethia/`:
 
 | Command | Description |
 |---------|-------------|
 | `make build-start` | Build binaries, images, start Compose stack |
-| `make start` | Start stack only |
+| `make start` | Start stack only (images already built) |
 | `make stop` | Stop stack |
 | `make debezium-register` | Register CDC connector (after first healthy start) |
 | `make db-sample` | Load sample data |
@@ -36,18 +51,17 @@ URLs:
 
 ## Dashboard
 
-From `realethia-dashboard/`:
-
-```bash
-npm ci
-npm run codegen:types
-```
-
-Two terminals:
+Prepared by `make setup` (`npm ci`, codegen). Start manually:
 
 ```bash
 npm run mock   # Prism — http://localhost:3001
 npm run dev    # Next.js — http://localhost:4000
+```
+
+Or from `realethia-start/`:
+
+```bash
+make dev-dashboard
 ```
 
 Quality gate before PRs:
@@ -60,23 +74,19 @@ API tools live under `api-spec/tools/`.
 
 ## Mobile app
 
-From `realethia-app/`:
+Prepared by `make setup`. Start with:
 
 ```bash
-npm ci
 npx expo start
 ```
 
-Use Expo Go or simulators per Expo docs.
+Or: `make dev-app` from `realethia-start/`.
 
 ## Infra (optional)
 
-Only needed for cloud cluster work. See `realethia-infra/README.md`:
+`make setup` copies `envs/staging/.env.staging` and `envs/prod/.env.prod` from examples if missing.
 
-```bash
-make setup          # macOS brew deps
-make staging deploy # requires credentials
-```
+Cloud deployment: see `realethia-infra/README.md`.
 
 ## Troubleshooting
 
@@ -84,7 +94,7 @@ make staging deploy # requires credentials
 
 - Ensure Docker Desktop is running
 - Check port conflicts (5432, 8080, 9092)
-- `cd ethia && make clean && make build-start`
+- `cd ethia && make clean && make start` (from realethia-start)
 
 ### Dashboard mock vs real backend
 

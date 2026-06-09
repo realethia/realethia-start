@@ -33,20 +33,23 @@ log "Checking prerequisites (workspace: ${REALETHIA_WORKSPACE})"
 echo ""
 echo "Required:"
 check git
-check docker
 check make
 check go
 check node
 check npm
 
 echo ""
-echo "Optional:"
+echo "Optional (needed for make start):"
+check_optional docker
 if docker compose version >/dev/null 2>&1; then
   printf '  \033[32mok\033[0m  docker compose\n'
 else
   printf '  \033[33moptional\033[0m  docker compose\n'
   OPTIONAL_MISSING+=("docker compose")
 fi
+
+echo ""
+echo "Optional:"
 check_optional yq
 check_optional az "Azure CLI"
 check_optional azd "Azure Developer CLI"

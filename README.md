@@ -1,6 +1,6 @@
 # Realethia Start
 
-Local workspace bootstrap for the [Realethia](https://github.com/realethia) system — clone all repos, prepare local development, and provide AI-oriented context (`AGENTS.md`, Cursor rules, architecture notes).
+Local workspace bootstrap for the [Realethia](https://github.com/realethia) system.
 
 ## Quick start
 
@@ -10,14 +10,17 @@ Clone this repo first, then run setup from its directory:
 git clone https://github.com/realethia/realethia-start.git
 cd realethia-start
 make setup
+make start
 ```
 
 `make setup` will:
 
-1. Check prerequisites (git, Docker, Go, Node, npm)
+1. Check prerequisites (git, Go, Node, npm)
 2. Clone sibling repos into the parent directory (e.g. `~/work/realethia/`)
-3. Bootstrap local-dev repos (npm install, Ethia Docker stack)
+3. Prepare all repos (npm install, copy `.env` files from examples)
 4. Regenerate `realethia.code-workspace`
+
+Nothing is built or started during setup. Use `make start` to run the Ethia Docker stack.
 
 Open the multi-root workspace:
 
@@ -31,7 +34,7 @@ After setup, the parent folder typically looks like:
 
 ```
 realethia/                    # REALETHIA_WORKSPACE (default: parent of realethia-start)
-├── realethia-start/            # this repo
+├── realethia-start/          # this repo
 ├── ethia/                    # flow engine (Go + Docker Compose)
 ├── realethia-dashboard/      # Next.js + OpenAPI mock
 ├── realethia-app/            # Expo mobile app
@@ -61,22 +64,22 @@ Canonical list: [`repos.yaml`](repos.yaml).
 ## Common commands
 
 ```bash
-make check              # Prerequisites only
-make clone              # Clone/update all repos
-make bootstrap          # Prepare local-dev repos
-make bootstrap-env-only # Copy ethia .env without starting Docker
-make status             # Which repos are cloned
-make dev-all            # Print terminal commands for full stack
+make setup       # Clone repos + prepare deps/env (no start)
+make start       # Build and start Ethia Docker stack
+make check       # Prerequisites only
+make clone       # Clone/update all repos
+make bootstrap   # Prepare all repos (npm, .env files)
+make status      # Which repos are cloned
+make dev-all     # Print commands for full local stack
 ```
 
 ### Ethia (backend)
 
+After `make setup`, edit `../ethia/infra/.env` and fill secrets, then:
+
 ```bash
-cd ../ethia
-cp infra/.env.example infra/.env   # if not done by bootstrap
-# Fill POSTGRES_PASSWORD, OPENAI_API_KEY, Azure storage vars
-make build-start                   # Build + start stack
-make debezium-register             # Once after first healthy start
+make start
+# or: cd ../ethia && make build-start && make debezium-register
 ```
 
 - Console: http://localhost:8080
@@ -109,10 +112,10 @@ npx expo start
 | Tool | Used by |
 |------|---------|
 | git | Clone repos |
-| Docker + Compose | ethia local stack |
 | Go 1.22+ | ethia services |
 | Node 20+ / npm | dashboard, app |
 | make | ethia, realethia-start |
+| Docker + Compose | `make start` (Ethia stack) |
 
 Optional: Azure CLI / azd (dashboard deploy), kubectl + hcloud (realethia-infra), Expo Go (mobile testing).
 

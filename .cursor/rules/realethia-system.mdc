@@ -25,4 +25,4 @@ You are working in the Realethia workspace bootstrapped by `realethia-start`.
 
 ## Local stack
 
-Ethia: `make build-start` in ethia. Dashboard: `npm run mock` + `npm run dev`. See `realethia-start/docs/local-development.md`.
+Ethia: `make setup` then `make start`. Dashboard: `npm run mock` + `npm run dev`. See `realethia-start/docs/local-development.md`.

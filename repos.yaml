@@ -14,7 +14,9 @@ repos:
     local_dev: true
     bootstrap:
       - cp -n infra/.env.example infra/.env || true
+    start:
       - make build-start
+      - make debezium-register
     ports:
       console: 8080
       postgres: 5432
@@ -44,8 +46,9 @@ repos:
     description: Kubernetes deployment (Hetzner k3s), staging/prod envs
     url: https://github.com/realethia/realethia-infra.git
     local_dev: false
-    optional_bootstrap:
-      - make setup
+    bootstrap:
+      - cp -n envs/staging/.env.example envs/staging/.env.staging || true
+      - cp -n envs/prod/.env.example envs/prod/.env.prod || true
     note: Cloud deployment only; not required for typical local dashboard + ethia dev.
 
   - name: realethia-research-docs

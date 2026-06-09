@@ -1,66 +1,60 @@
 #!/usr/bin/env bash
-# Prepare cloned repos for local development.
+# Prepare cloned repos: dependencies and env files only (does not start services).
 
 set -euo pipefail
 source "$(dirname "$0")/lib.sh"
 
-ONLY=""
-SKIP_ETHIA_BUILD=0
-
 usage() {
   cat <<EOF
-Usage: $(basename "$0") [options] [repo...]
+Usage: $(basename "$0") [repo...]
 
-Run bootstrap steps for local-dev repos (see repos.yaml).
-If repo names are given, only those repos are bootstrapped.
+Prepare repos for local development (see repos.yaml):
+  - copy .env files from examples
+  - install npm dependencies
+  - run codegen where needed
 
-Options:
-  --skip-ethia-build    Only copy .env; do not run make build-start
-  -h, --help            Show this help
+Does not build, start, or deploy anything. Use: make start
+
+If repo names are given, only those repos are prepared.
 EOF
 }
 
-while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --skip-ethia-build) SKIP_ETHIA_BUILD=1; shift ;;
-    -h | --help)
-      usage
-      exit 0
-      ;;
-    -*) err "Unknown option: $1" ;;
-    *) break ;;
-  esac
-done
+if [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]]; then
+  usage
+  exit 0
+fi
 
 TARGETS=("$@")
 if ((${#TARGETS[@]} == 0)); then
   TARGETS=()
   while IFS= read -r line; do
     [[ -n "$line" ]] && TARGETS+=("$line")
-  done < <(list_local_dev_repo_names)
+  done < <(list_repo_names)
 fi
 
 "${SCRIPT_DIR}/check-prereqs.sh"
+
+copy_env_if_missing() {
+  local example="$1"
+  local dest="$2"
+  local label="$3"
+  if [[ -f "${example}" && ! -f "${dest}" ]]; then
+    cp "${example}" "${dest}"
+    warn "Created ${label} — review and fill in secrets"
+  fi
+}
 
 for name in "${TARGETS[@]}"; do
   dest="$(repo_path "$name")"
   [[ -d "${dest}/.git" ]] || err "Repo not cloned: ${name} (run: make clone)"
 
-  log "Bootstrap ${name}..."
+  log "Prepare ${name}..."
   case "$name" in
     ethia)
-      if [[ ! -f "${dest}/infra/.env" ]]; then
-        cp "${dest}/infra/.env.example" "${dest}/infra/.env"
-        warn "Created ethia/infra/.env — fill secrets (POSTGRES_PASSWORD, OPENAI_API_KEY, Azure storage, etc.)"
-      fi
-      if [[ "${SKIP_ETHIA_BUILD}" == "1" ]]; then
-        log "Skipped ethia build (SKIP_ETHIA_BUILD)"
-      else
-        log "Building and starting Ethia stack (this may take several minutes)..."
-        (cd "${dest}" && make build-start)
-        log "Register Debezium connector (one-time after first start)..."
-        (cd "${dest}" && make debezium-register) || warn "debezium-register failed — run manually when stack is healthy"
-      fi
+      copy_env_if_missing \
+        "${dest}/infra/.env.example" \
+        "${dest}/infra/.env" \
+        "ethia/infra/.env"
       ;;
     realethia-dashboard)
       (cd "${dest}" && npm ci && npm run codegen:types)
@@ -68,16 +62,31 @@ for name in "${TARGETS[@]}"; do
     realethia-app)
       (cd "${dest}" && npm ci)
       ;;
+    realethia-infra)
+      copy_env_if_missing \
+        "${dest}/envs/staging/.env.example" \
+        "${dest}/envs/staging/.env.staging" \
+        "realethia-infra/envs/staging/.env.staging"
+      copy_env_if_missing \
+        "${dest}/envs/prod/.env.example" \
+        "${dest}/envs/prod/.env.prod" \
+        "realethia-infra/envs/prod/.env.prod"
+      ;;
+    realethia-research-docs)
+      log "No prepare steps for ${name}"
+      ;;
+    realethia-start)
+      log "Skipped bootstrap repo"
+      ;;
     *)
-      warn "No bootstrap steps defined for: ${name}"
+      warn "No prepare steps defined for: ${name}"
       ;;
   esac
   log "Done: ${name}"
 done
 
-log "Bootstrap complete."
+log "Prepare complete."
 echo ""
-echo "Next steps:"
-echo "  make dev-dashboard   # mock API + Next.js on :3001 / :4000"
-echo "  make dev-ethia       # Ethia console on :8080 (if not already running)"
-echo "  make dev-app         # Expo dev server"
+echo "Next: make start          # build and start local services (Ethia stack)"
+echo "      make dev-dashboard  # mock API + Next.js"
+echo "      make dev-app        # Expo dev server"

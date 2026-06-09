@@ -31,13 +31,6 @@ list_repo_names() {
   awk '/^  - name:/ { print $3 }' "${REPOS_FILE}"
 }
 
-list_local_dev_repo_names() {
-  awk '
-    /^  - name:/ { name=$3 }
-    /local_dev: true/ && name { print name; name="" }
-  ' "${REPOS_FILE}"
-}
-
 repo_url() {
   local name="$1"
   awk -v n="$name" '/^  - name:/ { found=($3==n) } found && /url:/ { print $2; exit }' "${REPOS_FILE}"

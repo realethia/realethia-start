@@ -24,7 +24,7 @@ Workspace root: parent of `realethia-start` (override with `REALETHIA_WORKSPACE`
 - **Poller**: RSS/feed fetch, dedup, publish to Kafka `source` topic
 - **Connect**: Redpanda Connect pipelines (router, transformers, outputs)
 
-Local stack: `ethia/infra/docker-compose.yml`. Start with `make build-start` from `ethia/`.
+Local stack: `ethia/infra/docker-compose.yml`. Start with `make start` from `realethia-start/` (or `make build-start` from `ethia/`).
 
 Key paths:
 
@@ -77,6 +77,8 @@ Secrets: `ethia/infra/.env` (from `.env.example`). Required for full functionali
 ## Useful commands (from realethia-start)
 
 ```bash
+make setup    # clone + prepare (no start)
+make start    # build and start Ethia stack
 make status
 make dev-all
 ```
