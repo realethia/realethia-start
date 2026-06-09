@@ -1,0 +1,44 @@
+---
+description: Git commit message conventions for all Realethia repos
+alwaysApply: true
+---
+
+# Git commit messages
+
+All Realethia repositories use **Conventional Commits** with this subject format:
+
+```
+type: Short description starting with a capital letter.
+```
+
+## Types
+
+| Type | Use for |
+|------|---------|
+| `feat` | New feature or user-facing capability |
+| `fix` | Bug fix |
+| `docs` | Documentation only |
+| `chore` | Tooling, deps, config, repo maintenance |
+| `refactor` | Code change that is not a feat or fix |
+| `test` | Tests only |
+| `ci` | CI/CD pipeline changes |
+| `perf` | Performance improvement |
+
+## Rules
+
+1. **Subject format:** `type: Description` — lowercase type, colon + space, description starts with a capital letter.
+2. **Example:** `feat: Separate setup from start for local bootstrap.`
+3. **Keep subjects concise** (one line). Add a body only when the user asks or the change needs brief context.
+4. **No co-authors** — never add `Co-authored-by` or tool/agent attribution trailers.
+5. **No AI mentions** — do not reference Cursor, Copilot, or agents in commit messages.
+6. **Commit only when asked** — do not create commits unless the user explicitly requests it.
+7. **Match scope** — one logical change per commit; message describes the *why*, not a file list.
+
+## Examples
+
+```
+feat: Add RSS test server Makefile target.
+fix: Prevent duplicate feed registry writes on CDC replay.
+docs: Document local bootstrap workflow in README.
+chore: Sync agent rules to sibling repos on setup.
+```

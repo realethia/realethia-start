@@ -63,6 +63,21 @@ Secrets: `ethia/infra/.env` (from `.env.example`). Required for full functionali
 5. **research-docs** are exploratory — do not treat as implementation specs
 6. Run repo-local checks: `make check` (ethia), `npm run check` (dashboard)
 
+## Git commits
+
+All repos follow Conventional Commits. See `.cursor/rules/git-commits.mdc`.
+
+Format: `type: Description starting with capital letter.`
+
+Example: `feat: Separate setup from start for local bootstrap.`
+
+Rules for agents:
+
+- Use `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `ci`, or `perf`
+- No `Co-authored-by` trailers
+- No mentions of Cursor or AI tools in messages
+- Commit only when the user explicitly asks
+
 ## Local ports (default)
 
 | Service | Port |

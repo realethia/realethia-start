@@ -86,6 +86,7 @@ for name in "${TARGETS[@]}"; do
 done
 
 log "Prepare complete."
+"${SCRIPT_DIR}/sync-agent-rules.sh"
 echo ""
 echo "Next: make start          # build and start local services (Ethia stack)"
 echo "      make dev-dashboard  # mock API + Next.js"
