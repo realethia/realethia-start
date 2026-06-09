@@ -1,0 +1,16 @@
+# Cloned sibling repos (when using nested layout)
+repos/
+
+# Local overrides
+.env
+.env.local
+*.local
+
+# OS / editor
+.DS_Store
+.idea/
+*.swp
+*~
+
+# Logs
+*.log

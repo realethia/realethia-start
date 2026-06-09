@@ -1,0 +1,42 @@
+{
+  "folders": [
+    {
+      "name": "realethia-start",
+      "path": "."
+    },
+    {
+      "name": "ethia",
+      "path": "../ethia"
+    },
+    {
+      "name": "realethia-dashboard",
+      "path": "../realethia-dashboard"
+    },
+    {
+      "name": "realethia-app",
+      "path": "../realethia-app"
+    },
+    {
+      "name": "realethia-research-docs",
+      "path": "../realethia-research-docs"
+    },
+    {
+      "name": "realethia-infra",
+      "path": "../realethia-infra"
+    }
+  ],
+  "settings": {
+    "yaml.validate": false,
+    "yaml.hover": true,
+    "yaml.completion": true,
+    "files.associations": {
+      "**/api-spec/**/*.yaml": "yaml",
+      "**/api-spec/**/*.yml": "yaml"
+    },
+    "yaml.schemaStore.enable": false,
+    "tailwindCSS.includeLanguages": {
+      "css": "css",
+      "postcss": "css"
+    }
+  }
+}

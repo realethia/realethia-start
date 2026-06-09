@@ -1,0 +1,55 @@
+# Realethia system repository manifest.
+# Used by scripts/clone-repos.sh and bootstrap tooling.
+#
+# workspace_layout: sibling — clones into $REALETHIA_WORKSPACE (parent of this repo)
+# workspace_layout: nested   — clones into $REALETHIA_WORKSPACE/repos/
+
+organization: realethia
+default_branch: main
+
+repos:
+  - name: ethia
+    description: Real-time news flow engine (Go services, Docker Compose local stack)
+    url: https://github.com/realethia/ethia.git
+    local_dev: true
+    bootstrap:
+      - cp -n infra/.env.example infra/.env || true
+      - make build-start
+    ports:
+      console: 8080
+      postgres: 5432
+      rss_test: 8081
+
+  - name: realethia-dashboard
+    description: Next.js web dashboard and OpenAPI mock tooling
+    url: https://github.com/realethia/realethia-dashboard.git
+    local_dev: true
+    bootstrap:
+      - npm ci
+      - npm run codegen:types
+    ports:
+      web: 4000
+      mock_api: 3001
+
+  - name: realethia-app
+    description: Expo React Native mobile app
+    url: https://github.com/realethia/realethia-app.git
+    local_dev: true
+    bootstrap:
+      - npm ci
+    ports:
+      expo: 8081
+
+  - name: realethia-infra
+    description: Kubernetes deployment (Hetzner k3s), staging/prod envs
+    url: https://github.com/realethia/realethia-infra.git
+    local_dev: false
+    optional_bootstrap:
+      - make setup
+    note: Cloud deployment only; not required for typical local dashboard + ethia dev.
+
+  - name: realethia-research-docs
+    description: Draft research and explorations (not production specs)
+    url: https://github.com/realethia/realethia-research-docs.git
+    local_dev: false
+    bootstrap: []

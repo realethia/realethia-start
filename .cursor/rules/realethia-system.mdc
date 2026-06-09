@@ -1,0 +1,28 @@
+---
+description: Realethia multi-repo system context for AI agents
+alwaysApply: true
+---
+
+# Realethia system
+
+You are working in the Realethia workspace bootstrapped by `realethia-start`.
+
+## Repositories
+
+- **ethia** — Go flow engine (orchestrator, poller, connect); local dev via Docker Compose in `infra/`
+- **realethia-dashboard** — Next.js UI; API contract in `api-spec/openapi.yaml`; local mock on port 3001
+- **realethia-app** — Expo React Native mobile app
+- **realethia-infra** — K8s/Hetzner deployment (cloud only)
+- **realethia-research-docs** — draft research, not production specs
+
+## Rules
+
+1. Identify which repo owns the change before editing; avoid cross-repo drive-by refactors.
+2. Never commit secrets (`.env`, keys, connection strings).
+3. For ethia pipeline/flow logic, read `ethia/docs/architecture.md` first.
+4. Dashboard changes that touch API shapes should update `api-spec/openapi.yaml` and run `npm run codegen:types`.
+5. Prefer repo-native verification: `make check` (ethia), `npm run check` (dashboard).
+
+## Local stack
+
+Ethia: `make build-start` in ethia. Dashboard: `npm run mock` + `npm run dev`. See `realethia-start/docs/local-development.md`.
