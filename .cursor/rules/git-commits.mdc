@@ -31,10 +31,25 @@ type: Short description starting with a capital letter.
 1. **Subject format:** `type: Description` — lowercase type, colon + space, description starts with a capital letter.
 2. **Example:** `feat: Separate setup from start for local bootstrap.`
 3. **Keep subjects concise** (one line). Add a body only when the user asks or the change needs brief context.
-4. **No co-authors** — never add `Co-authored-by` or tool/agent attribution trailers.
-5. **No AI mentions** — do not reference Cursor, Copilot, or agents in commit messages.
-6. **Commit only when asked** — do not create commits unless the user explicitly requests it.
-7. **Match scope** — one logical change per commit; message describes the *why*, not a file list.
+4. **Commit only when asked** — do not create commits unless the user explicitly requests it.
+5. **Match scope** — one logical change per commit; message describes the *why*, not a file list.
+
+## Authorship (strict)
+
+Commits must be **solely attributed to the human user**. Agents must never add themselves as co-authors.
+
+**Never add** any of these trailers:
+
+- `Co-authored-by:`
+- `Co-Authored-By:`
+- `Signed-off-by:` (on behalf of an agent)
+- `Assisted-by:`, `Made-with:`, or similar tool/agent attribution lines
+
+**Never mention** Cursor, Copilot, Claude, or other AI tools in commit messages or trailers.
+
+If a git hook or tool injects a co-author trailer (e.g. `Co-authored-by: Cursor <cursoragent@cursor.com>`), **remove it before the commit lands**. Use `git commit-tree` or amend with a clean message if `git commit` cannot skip the hook.
+
+The final commit message must contain **only** the intended subject (and optional body) — nothing else.
 
 ## Examples
 

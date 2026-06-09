@@ -85,8 +85,9 @@ Example: `feat: Separate setup from start for local bootstrap.`
 Rules for agents:
 
 - Use `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `ci`, or `perf`
-- No `Co-authored-by` trailers
-- No mentions of Cursor or AI tools in messages
+- **Never add co-authors** — no `Co-authored-by` or agent/tool attribution in commits
+- **Never mention** Cursor, Copilot, or other AI tools in commit messages
+- If a hook injects a co-author trailer, strip it before the commit is final
 - Commit only when the user explicitly asks
 
 ## Local ports (default)
